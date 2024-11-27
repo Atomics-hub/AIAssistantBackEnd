@@ -17,24 +17,31 @@ import java.util.stream.Collectors;
 public class AssistantService {
 
     private final AssistantConversation assistantConversation;
-
+    private final List<String> assistantList;
 
     @Autowired
     public AssistantService(AssistantConversation assistantConversation) {
         this.assistantConversation = assistantConversation;
+        this.assistantList = new ArrayList<>();
     }
 
     // Create Assistant
     public String createAssistant(String assistantName, boolean verbose) {
         assistantConversation.createAssistant(assistantName, verbose);
+        assistantList.add(assistantConversation.getAssistantId());
         return assistantConversation.getAssistantId();
+    }
+
+    public void addAssistant(String assistantId) {
+        assistantList.add(assistantId);
     }
 
     public String createUserMessage(String message) {
         return assistantConversation.createUserMessage(assistantConversation.threadId, message);
     }
 
-    public String assistantReply(String threadId, String assistantId) {
+    public String assistantReply(String message, String threadId, String assistantId) {
+        assistantConversation.createUserMessage(assistantConversation.threadId, message);
         return assistantConversation.assistantReply(threadId, assistantId);
     }
 
@@ -50,4 +57,15 @@ public class AssistantService {
         return assistantConversation.getChatMessages();
     }
 
+    public boolean uploadFileToAssistant(String filePath, boolean verbose) {
+        return assistantConversation.uploadFileToAssistant(filePath, verbose);
+    }
+
+    public String getAssistantList() {
+        String result = "[";
+        for (String assistantId : assistantList) {
+            result = result + assistantId + ", ";
+        }
+        return result;
+    }
 }

@@ -1,12 +1,10 @@
 package com.example.aiassistant.controller;
 
-import com.example.aiassistant.dto.*;
 import com.example.aiassistant.service.AssistantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -31,6 +29,13 @@ public class AssistantController {
         return ResponseEntity.ok(assistantId);
     }
 
+    // Create Assistant
+    @GetMapping("/getAssistantList")
+    public ResponseEntity<String> getAssistantList(@RequestBody Map<String, String> request) {
+        String assistantList = assistantService.getAssistantList();
+        return ResponseEntity.ok(assistantList);
+    }
+
     // user message
     @PostMapping("/{threadId}/userMessage")
     public ResponseEntity<String> createUserMessage(@RequestBody Map<String, String> request) {
@@ -44,15 +49,19 @@ public class AssistantController {
     public ResponseEntity<String> assistantReply(@RequestBody Map<String, String> request) {
 
         String message = request.get("userMessage");
-        String response = assistantService.assistantReply(assistantService.getThreadId(), assistantService.getAssistantId());
+        String response = assistantService.assistantReply(message, assistantService.getThreadId(), assistantService.getAssistantId());
         return ResponseEntity.ok(response);
     }
 
     // list of chat message history
-    @PostMapping("{threadId}/chatMessages")
+    @PostMapping("/{threadId}/chatMessages")
     public ResponseEntity<String> chatMesssages(@RequestBody Map<String, String> request) {
-        String threadId = request.get("threadId");
+
         String response = String.valueOf(assistantService.getChatMessages());
         return ResponseEntity.ok(response);
     }
+
+
+//    @PostMapping("/uploadFile")
+//    public ResponseEntity<String> uploadFile(@Request)
 }
