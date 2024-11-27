@@ -14,7 +14,7 @@ public class WebConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         // Allow all origins - for development only
-        config.addAllowedOrigin("http://localhost:3002");
+        config.addAllowedOrigin("http://localhost:3000");
 
         // Allow all headers and methods
         config.addAllowedHeader("*");
