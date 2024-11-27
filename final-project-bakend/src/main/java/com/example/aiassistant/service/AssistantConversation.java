@@ -1200,6 +1200,14 @@ public class AssistantConversation {
     public String getThreadId() {
         return this.threadId;
     }
+
+    public ArrayList<String> getChatMessages() {
+        return this.chatMessages;
+    }
+
+    public String getModelName() {
+        return this.modelName;
+    }
     /**
      * Gives demonstrations on the following main functions:
      * 1) Assistant creation

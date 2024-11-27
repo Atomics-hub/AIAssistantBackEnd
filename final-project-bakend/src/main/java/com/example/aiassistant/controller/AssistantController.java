@@ -47,4 +47,12 @@ public class AssistantController {
         String response = assistantService.assistantReply(assistantService.getThreadId(), assistantService.getAssistantId());
         return ResponseEntity.ok(response);
     }
+
+    // list of chat message history
+    @PostMapping("{threadId}/chatMessages")
+    public ResponseEntity<String> chatMesssages(@RequestBody Map<String, String> request) {
+        String threadId = request.get("threadId");
+        String response = String.valueOf(assistantService.getChatMessages());
+        return ResponseEntity.ok(response);
+    }
 }
